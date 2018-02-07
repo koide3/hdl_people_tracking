@@ -1,0 +1,7 @@
+<library path="lib/libhdl_people_detection_nodelet">
+<class name="hdl_people_tracking/HdlPeopleDetectionNodelet" type="hdl_people_detection::HdlPeopleDetectionNodelet" base_class_type="nodelet::Nodelet" />
+</library>
+
+<library path="lib/libhdl_people_tracking_nodelet">
+<class name="hdl_people_tracking/HdlPeopleTrackingNodelet" type="hdl_people_tracking::HdlPeopleTrackingNodelet" base_class_type="nodelet::Nodelet" />
+</library>

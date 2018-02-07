@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- arguments -->
+  <arg name="nodelet_manager" default="velodyne_nodelet_manager" />
+
+  <include file="$(find hdl_localization)/launch/hdl_localization.launch">
+    <arg name="nodelet_manager" value="$(arg nodelet_manager)"/>
+  </include>
+
+
+  <node pkg="nodelet" type="nodelet" name="hdl_people_detection_nodelet" args="load hdl_people_tracking/HdlPeopleDetectionNodelet $(arg nodelet_manager)">
+  </node>
+
+  <node pkg="nodelet" type="nodelet" name="hdl_people_tracking_nodelet" args="load hdl_people_tracking/HdlPeopleTrackingNodelet $(arg nodelet_manager)">
+  </node>
+</launch>
