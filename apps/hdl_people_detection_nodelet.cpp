@@ -76,7 +76,7 @@ private:
     downsample_filter = voxelgrid;
 
     NODELET_INFO("create people detector");
-    detector.reset(new PeopleDetector());
+    detector.reset(new PeopleDetector(private_nh));
   }
 
   /**
@@ -127,9 +127,12 @@ private:
     globalmap = cloud;
 
     NODELET_INFO("background subtractor constructed");
+    double backsub_resolution = private_nh.param<double>("backsub_resolution", 0.2);
+    int backsub_occupancy_thresh = private_nh.param<int>("backsub_occupancy_thresh", 2);
+
     backsub.reset(new BackgroundSubtractor());
-    backsub->setVoxelSize(0.2f, 0.2f, 0.2f);
-    backsub->setOccupancyThresh(1);
+    backsub->setVoxelSize(backsub_resolution, backsub_resolution, backsub_resolution);
+    backsub->setOccupancyThresh(backsub_occupancy_thresh);
     backsub->setBackgroundCloud(globalmap);
 
     backsub_voxel_markers_pub.publish(backsub->create_voxel_marker());

@@ -14,10 +14,6 @@
 namespace kkl {
 	namespace alg {
 
-/*********************************************
- * ゼロ判定用テンプレート関数
- * いらないかも
-*********************************************/
 template<typename T>
 bool isZero(T value) {
 	return value == 0;
@@ -33,7 +29,6 @@ bool isZero(double value) {
 
 /************************************************
  * Munkres
- * 組み合わせ最適化問題を解く
  * http://csclab.murraystate.edu/bob.pilgrim/445/munkres.html
  * 
  * Munkres<int> munkres
@@ -44,8 +39,8 @@ class Munkres {
 public:
 	/*********************************************************
 	 * solve
-	 * cost : 組み合わせ問題のコスト行列 (cost.rows <= cost.cols)
-	 * ret : 組み合わせ最適解
+   * cost : cost matrix (cost.rows <= cost.cols)
+   * ret : solution
 	********************************************************/
 	Eigen::VectorXi solve(const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>& cost_) {
 		assert( cost_.rows() <= cost_.cols() );

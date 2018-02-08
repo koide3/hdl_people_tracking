@@ -7,10 +7,27 @@
     <arg name="nodelet_manager" value="$(arg nodelet_manager)"/>
   </include>
 
-
   <node pkg="nodelet" type="nodelet" name="hdl_people_detection_nodelet" args="load hdl_people_tracking/HdlPeopleDetectionNodelet $(arg nodelet_manager)">
+    <param name="downsample_resolution" value="0.1"/>
+    <!-- back subtraction params -->
+    <param name="backsub_resolution" value="0.2"/>
+    <param name="backsub_occupancy_thresh" value="2"/>
+    <!-- clustering params -->
+    <param name="cluster_min_pts" value="10"/>
+    <param name="cluster_max_pts" value="2048"/>
+    <param name="cluster_min_size_x" value="0.2"/>
+    <param name="cluster_min_size_y" value="0.2"/>
+    <param name="cluster_min_size_z" value="0.3"/>
+    <param name="cluster_max_size_x" value="1.0"/>
+    <param name="cluster_max_size_y" value="1.0"/>
+    <param name="cluster_max_size_z" value="2.0"/>
+    <!-- classification params -->
+    <param name="enable_classification" value="true"/>
   </node>
 
   <node pkg="nodelet" type="nodelet" name="hdl_people_tracking_nodelet" args="load hdl_people_tracking/HdlPeopleTrackingNodelet $(arg nodelet_manager)">
+    <!-- tracks with larger covariance matrix trace than this value will be removed -->
+    <param name="remove_trace_thresh" value="1.0"/>
+    <param name="human_radius" value="0.4"/>
   </node>
 </launch>

@@ -2,6 +2,8 @@
 #define PEOPLE_DETECTOR_H
 
 #include <memory>
+#include <ros/ros.h>
+
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 
@@ -19,12 +21,17 @@ namespace hdl_people_detection {
  */
 class PeopleDetector {
 public:
-  PeopleDetector();
+  PeopleDetector(ros::NodeHandle& nh);
   ~PeopleDetector();
 
   std::vector<Cluster::Ptr> detect(const pcl::PointCloud<pcl::PointXYZI>::ConstPtr& cloud) const;
 
 private:
+  int min_pts;
+  int max_pts;
+  Eigen::Array3f min_size;
+  Eigen::Array3f max_size;
+
   std::unique_ptr<KidonoHumanClassifier> classifier;
 };
 

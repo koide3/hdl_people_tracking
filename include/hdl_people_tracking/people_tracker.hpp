@@ -44,7 +44,7 @@ public:
   PeopleTracker(ros::NodeHandle& private_nh) {
     id_gen = 0;
     human_radius = private_nh.param<double>("human_radius", 0.4);
-    remove_trace_thresh = private_nh.param<double>("remove_trace_thresh", 0.5);
+    remove_trace_thresh = private_nh.param<double>("remove_trace_thresh", 1.0);
 
     data_association.reset(new kkl::alg::NearestNeighborAssociation<KalmanTracker::Ptr, Cluster>());
 //    data_association.reset(new kkl::alg::GlobalNearestNeighborAssociation<KalmanTracker::Ptr, VisualDetection>());

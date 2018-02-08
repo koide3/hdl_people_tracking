@@ -39,7 +39,7 @@ public:
     measurement.block<3, 3>(0, 0).setIdentity() * 0.2;
 
     Eigen::Matrix<double, 6, 6> process_noise = Eigen::Matrix<double, 6, 6>::Zero();
-    process_noise.topLeftCorner(3, 3) = Eigen::Matrix3d::Identity() * 0.003;
+    process_noise.topLeftCorner(3, 3) = Eigen::Matrix3d::Identity() * 0.03;
     process_noise.bottomRightCorner(3, 3) = Eigen::Matrix3d::Identity() * 0.01;
     Eigen::Matrix3d measurement_noise = Eigen::Matrix3d::Identity() * 0.2;
 
