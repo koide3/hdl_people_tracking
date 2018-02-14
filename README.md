@@ -1,5 +1,5 @@
 # hdl_people_tracking
-***hdl_people_tracking*** is a ROS package for real-time people tracking using a 3D LIDAR. It first performs <cite>[Haselich's clustering technique][1]</cite> to detect human candidate clusters, and then applies <cite>[Kidono's person classifier][1]</cite> to eliminate false detections. The detected clusters are tracked by using Kalman filter with a contant velocity model.
+***hdl_people_tracking*** is a ROS package for real-time people tracking using a 3D LIDAR. It first performs <cite>[Haselich's clustering technique][1]</cite> to detect human candidate clusters, and then applies <cite>[Kidono's person classifier][2]</cite> to eliminate false detections. The detected clusters are tracked by using Kalman filter with a contant velocity model.
 
 [1]:https://userpages.uni-koblenz.de/~agas/Documents/Haeselich2014CBP.pdf
 [2]:http://www.aisl.cs.tut.ac.jp/~jun/pdffiles/kidono-iv2011.pdf
