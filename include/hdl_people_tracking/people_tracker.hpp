@@ -6,7 +6,6 @@
 #include <Eigen/Dense>
 #include <boost/optional.hpp>
 #include <opencv2/opencv.hpp>
-#include <grace_msgs/Detection.h>
 
 #include <kkl/alg/data_association.hpp>
 #include <kkl/alg/nearest_neighbor_association.hpp>

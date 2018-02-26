@@ -154,7 +154,7 @@ public:
     marker->colors.reserve(8192);
     marker->points.reserve(8192);
 
-    for (Eigen::SparseVector<bool>::InnerIterator itr(occupancy_map); itr; ++itr) {
+    for (Eigen::SparseVector<int>::InnerIterator itr(occupancy_map); itr; ++itr) {
       if (itr.value() < occupancy_thresh) {
         continue;
       }

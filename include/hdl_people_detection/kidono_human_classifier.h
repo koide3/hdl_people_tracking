@@ -25,7 +25,13 @@ public:
   bool predict(const pcl::PointCloud<pcl::PointXYZI>::ConstPtr& cloud) const;
 
 private:
-  cv::Boost boost;
+#if CV_VERSION_EPOCH == 2
+  using CvBoost = cv::Boost;
+#else
+  using CvBoost = cv::ml::Boost;
+#endif
+
+  cv::Ptr<CvBoost> boost;
   kkl::ml::SvmScale scale;
 };
 

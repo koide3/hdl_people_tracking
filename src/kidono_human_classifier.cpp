@@ -1,5 +1,6 @@
 #include <hdl_people_detection/kidono_human_classifier.h>
 
+#include <ros/ros.h>
 #include <hdl_people_detection/kidono_feature_extractor.hpp>
 
 
@@ -8,17 +9,28 @@ namespace hdl_people_detection {
 KidonoHumanClassifier::KidonoHumanClassifier(const std::string &modelfile, const std::string &scalefile)
   : scale(scalefile, 213)
 {
-  boost.load(modelfile.c_str());
-  if(!boost.get_data()) {
-    std::cerr << "warning : failed to load boosting model!!" << std::endl;
-    std::cerr << "        : boosting is disabled!!" << std::endl;
-  }
+#if CV_VERSION_EPOCH == 2
+    boost = cv::Ptr<cv::Boost>(new cv::Boost());
+    boost->load(modelfile.c_str());
+    if(!boost->get_data()) {
+      ROS_ERROR("failed to read boost model!!");
+      ROS_ERROR("boost disabled");
+      boost.release();
+    }
+#else
+    boost = cv::ml::Boost::load(modelfile);
+    if(boost->empty()) {
+      ROS_ERROR("failed to read boost model!!");
+      ROS_ERROR("boost disabled");
+      boost.release();
+    }
+#endif
 }
 
 KidonoHumanClassifier::~KidonoHumanClassifier() {}
 
 bool KidonoHumanClassifier::predict(const pcl::PointCloud<pcl::PointXYZI>::ConstPtr &cloud) const {
-  if(!boost.get_data()) {
+  if(boost.empty()) {
     return true;
   }
 
@@ -26,7 +38,7 @@ bool KidonoHumanClassifier::predict(const pcl::PointCloud<pcl::PointXYZI>::Const
   auto feature = extractor.extract(cloud);
   auto scaled = scale.scaling(feature);
 
-  return boost.predict(scaled) > 0.0f;
+  return boost->predict(scaled) > 0.0f;
 }
 
 }
