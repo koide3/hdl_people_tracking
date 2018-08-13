@@ -58,11 +58,14 @@ public:
 
     // subscribers
     globalmap_sub = nh.subscribe("/globalmap", 1, &HdlPeopleDetectionNodelet::globalmap_callback, this);
-
-    odom_sub.reset(new message_filters::Subscriber<nav_msgs::Odometry>(mt_nh, "/odom", 20));
-    points_sub.reset(new message_filters::Subscriber<sensor_msgs::PointCloud2>(mt_nh, "/velodyne_points", 20));
-    sync.reset(new message_filters::TimeSynchronizer<nav_msgs::Odometry, sensor_msgs::PointCloud2>(*odom_sub, *points_sub, 20));
-    sync->registerCallback(boost::bind(&HdlPeopleDetectionNodelet::callback, this, _1, _2));
+    if(private_nh.param<bool>("static_sensor", false)) {
+      static_points_sub = mt_nh.subscribe("/velodyne_points", 32, &HdlPeopleDetectionNodelet::callback_static, this);
+    } else {
+      odom_sub.reset(new message_filters::Subscriber<nav_msgs::Odometry>(mt_nh, "/odom", 20));
+      points_sub.reset(new message_filters::Subscriber<sensor_msgs::PointCloud2>(mt_nh, "/velodyne_points", 20));
+      sync.reset(new message_filters::TimeSynchronizer<nav_msgs::Odometry, sensor_msgs::PointCloud2>(*odom_sub, *points_sub, 20));
+      sync->registerCallback(boost::bind(&HdlPeopleDetectionNodelet::callback, this, _1, _2));
+    }
   }
 
 private:
@@ -77,6 +80,39 @@ private:
 
     NODELET_INFO("create people detector");
     detector.reset(new PeopleDetector(private_nh));
+  }
+
+  /**
+   * @brief in case the sensor is fixed
+   * @param points_msg
+   */
+  void callback_static(const sensor_msgs::PointCloud2ConstPtr& points_msg) {
+    if(!globalmap) {
+      NODELET_INFO("constructing globalmap from a points msg");
+      globalmap_callback(points_msg);
+      NODELET_INFO("done");
+      return;
+    }
+
+    pcl::PointCloud<PointT>::Ptr cloud(new pcl::PointCloud<PointT>());
+    pcl::fromROSMsg(*points_msg, *cloud);
+    if(cloud->empty()) {
+      NODELET_ERROR("cloud is empty!!");
+      return;
+    }
+
+    // downsampling
+    pcl::PointCloud<PointT>::Ptr downsampled(new pcl::PointCloud<PointT>());
+    downsample_filter->setInputCloud(cloud);
+    downsample_filter->filter(*downsampled);
+    downsampled->header = cloud->header;
+    cloud = downsampled;
+
+    // background subtraction and people detection
+    auto filtered = backsub->filter(cloud);
+    auto clusters = detector->detect(filtered);
+
+    publish_msgs(points_msg->header.stamp, filtered, clusters);
   }
 
   /**
@@ -266,6 +302,7 @@ private:
   std::unique_ptr<message_filters::TimeSynchronizer<nav_msgs::Odometry, sensor_msgs::PointCloud2>> sync;
 
   ros::Subscriber globalmap_sub;
+  ros::Subscriber static_points_sub;
 
   // publishers
   ros::Publisher backsub_points_pub;

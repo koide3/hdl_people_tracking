@@ -2,13 +2,10 @@
 <launch>
   <!-- arguments -->
   <arg name="nodelet_manager" default="velodyne_nodelet_manager" />
-
-  <include file="$(find hdl_localization)/launch/hdl_localization.launch">
-    <arg name="nodelet_manager" value="$(arg nodelet_manager)"/>
-  </include>
+  <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager)" args="manager" output="screen"/>
 
   <node pkg="nodelet" type="nodelet" name="hdl_people_detection_nodelet" args="load hdl_people_tracking/HdlPeopleDetectionNodelet $(arg nodelet_manager)">
-    <param name="static_sensor" value="false"/>
+  	<param name="static_sensor" value="true"/>
     <param name="downsample_resolution" value="0.1"/>
     <!-- back subtraction params -->
     <param name="backsub_resolution" value="0.2"/>
@@ -23,7 +20,7 @@
     <param name="cluster_max_size_y" value="1.0"/>
     <param name="cluster_max_size_z" value="2.0"/>
     <!-- classification params -->
-    <param name="enable_classification" value="true"/>
+    <param name="enable_classification" value="false"/>
   </node>
 
   <node pkg="nodelet" type="nodelet" name="hdl_people_tracking_nodelet" args="load hdl_people_tracking/HdlPeopleTrackingNodelet $(arg nodelet_manager)">

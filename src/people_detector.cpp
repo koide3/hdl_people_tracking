@@ -31,12 +31,8 @@ std::vector<Cluster::Ptr> PeopleDetector::detect(const pcl::PointCloud<pcl::Poin
   MarcelPeopleDetector marcel(min_pts, max_pts, min_size, max_size);
   auto clusters = marcel.detect(cloud);
 
-  if(!classifier) {
-    return clusters;
-  }
-
   for(auto& cluster : clusters) {
-    cluster->is_human = classifier->predict(cluster->cloud);
+    cluster->is_human = !classifier || classifier->predict(cluster->cloud);
   }
 
   return clusters;
