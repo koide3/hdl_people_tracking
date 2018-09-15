@@ -28,8 +28,8 @@ roslaunch hdl_people_tracking hdl_people_tracking.launch
 ```
 
 ```bash
-roscd hdl_localizatrion/rviz
-rviz -d hdl_localizatrion.rviz
+roscd hdl_localization/rviz
+rviz -d hdl_localization.rviz
 ```
 
 ```bash
