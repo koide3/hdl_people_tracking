@@ -61,7 +61,7 @@ target_link_libraries(hdl_people_detection_nodelet
   ${OpenCV_LIBRARIES}
   ${PCL_LIBRARIES}
 )
-add_dependencies(hdl_people_detection_nodelet ${PROJECT_NAME}_gencpp)
+add_dependencies(hdl_people_detection_nodelet hdl_people_tracking_gencpp)
 
 add_library(hdl_people_tracking_nodelet apps/hdl_people_tracking_nodelet.cpp)
 target_link_libraries(hdl_people_tracking_nodelet
@@ -69,4 +69,4 @@ target_link_libraries(hdl_people_tracking_nodelet
   ${OpenCV_LIBRARIES}
   ${PCL_LIBRARIES}
 )
-add_dependencies(hdl_people_detection_nodelet ${PROJECT_NAME}_gencpp)
+add_dependencies(hdl_people_tracking_nodelet hdl_people_tracking_gencpp)
