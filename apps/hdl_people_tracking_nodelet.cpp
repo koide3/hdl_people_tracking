@@ -1,6 +1,7 @@
 #include <mutex>
 #include <memory>
 #include <iostream>
+#include <boost/format.hpp>
 
 #include <ros/ros.h>
 #include <pcl_ros/point_cloud.h>
