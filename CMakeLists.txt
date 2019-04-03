@@ -44,8 +44,8 @@ generate_messages(DEPENDENCIES std_msgs geometry_msgs)
 ###################################
 catkin_package(
    INCLUDE_DIRS include
-#   LIBRARIES hdl_people_tracking
-#   CATKIN_DEPENDS nodelet pcl_ros roscpp sensor_msgs
+   LIBRARIES hdl_people_tracking
+   CATKIN_DEPENDS nodelet pcl_ros roscpp sensor_msgs message_runtime
 #   DEPENDS system_lib
 )
 

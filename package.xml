@@ -26,7 +26,7 @@
   <exec_depend>pcl_ros</exec_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
-  <exec_depend>message_generation</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
 
   <export>
     <nodelet plugin="${prefix}/nodelet_plugins.xml" />
