@@ -1,6 +1,7 @@
 #include <mutex>
 #include <memory>
 #include <iostream>
+#include <boost/format.hpp>
 
 #include <pcl/filters/filter.h>
 #include <pcl/filters/voxel_grid.h>
