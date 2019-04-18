@@ -36,7 +36,18 @@ rviz -d hdl_localization.rviz
 rosbag play --clock hdl_400.bag
 ```
 
+---
+[**NOTE**]:
+
 If it doesn't work well, change *ndt_neighbor_search_method* in *hdl_localization.launch* to "DIRECT1". It makes the scan matching significantly fast, but a little bit unstable.
+
+If your bagfile is static (velodyne device is fixed) try with the following launch file without any localization needs:
+
+```bash
+rosparam set use_sim_time true
+roslaunch hdl_people_tracking hdl_people_tracking_static.launch
+```
+
 
 ## Related packages
 
