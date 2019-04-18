@@ -18,7 +18,7 @@ KidonoHumanClassifier::KidonoHumanClassifier(const std::string &modelfile, const
       boost.release();
     }
 #else
-    boost = cv::ml::Boost::load<cv::ml::Boost>(modelfile);
+    boost = cv::ml::Boost::load(modelfile);
     if(boost->empty()) {
       ROS_ERROR("failed to read boost model!!");
       ROS_ERROR("boost disabled");
