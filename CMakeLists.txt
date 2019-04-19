@@ -11,6 +11,13 @@ set(CMAKE_BUILD_TYPE "RELEASE")
 
 find_package(OpenCV REQUIRED)
 
+find_package(Qt5Gui)
+find_package(Qt5Core)
+find_package(Qt5Widgets)
+find_package(Qt5Test)
+find_package(Qt5Concurrent)
+find_package(Qt5OpenGL)
+
 find_package(catkin REQUIRED COMPONENTS
   nodelet
   pcl_ros
@@ -37,9 +44,9 @@ generate_messages(DEPENDENCIES std_msgs geometry_msgs)
 ###################################
 catkin_package(
    INCLUDE_DIRS include
-#  LIBRARIES hdl_people_tracking
-#  CATKIN_DEPENDS nodelet pcl_ros roscpp sensor_msgs
-#  DEPENDS system_lib
+   LIBRARIES hdl_people_tracking
+   CATKIN_DEPENDS nodelet pcl_ros roscpp sensor_msgs message_runtime
+#   DEPENDS system_lib
 )
 
 ###########
