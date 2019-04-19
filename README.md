@@ -15,12 +15,13 @@ Video:<br>
 The following ros packages are required:
 - pcl_ros
 - <a href="https://github.com/koide3/ndt_omp">ndt_omp</a>
-- <a href="https://github.com/koide3/hdl_localization">hdl_localization</a>
+- <a href="https://github.com/agn-7/hdl_localization">hdl_localization</a>
 
 ## Example
 
 Bag file (recorded in an outdoor environment): 
-- [hdl_400.bag.tar.gz](http://www.aisl.cs.tut.ac.jp/databases/hdl_graph_slam/hdl_400.bag.tar.gz) (933MB)
+- [hdl_400.bag.tar.gz](http://www.aisl.cs.tut.ac.jp/databases/hdl_graph_slam/hdl_400.bag.tar.gz) (933MB - Moving Sensor)
+- [hdl_500.bag.tar.gz](https://drive.google.com/open?id=1oPj6xJ0VpvGc_u31EQuGAqiVMnbA5Kar) (500MB - Fixed sensor)
 
 ```bash
 rosparam set use_sim_time true
@@ -46,6 +47,15 @@ If your bagfile is static (velodyne device is fixed) try with the following laun
 ```bash
 rosparam set use_sim_time true
 roslaunch hdl_people_tracking hdl_people_tracking_static.launch
+```
+
+```bash
+roscd hdl_localization/rviz
+rviz -d hdl_localization_static.rviz
+```
+
+```bash
+rosbag play --clock hdl_500.bag
 ```
 
 
