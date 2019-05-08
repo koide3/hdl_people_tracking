@@ -20,7 +20,7 @@
     <param name="cluster_max_size_y" value="1.0"/>
     <param name="cluster_max_size_z" value="2.0"/>
     <!-- classification params -->
-    <param name="enable_classification" value="false"/>
+    <param name="enable_classification" value="true"/>
   </node>
 
   <node pkg="nodelet" type="nodelet" name="hdl_people_tracking_nodelet" args="load hdl_people_tracking/HdlPeopleTrackingNodelet $(arg nodelet_manager)">
