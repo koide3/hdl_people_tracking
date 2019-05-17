@@ -95,8 +95,10 @@ private:
       return;
     }
 
+    //iter++;  // frame counter.
+    //std::cout<<iter<<"\n";
     pcl::PointCloud<PointT>::Ptr cloud(new pcl::PointCloud<PointT>());
-    pcl::fromROSMsg(*points_msg, *cloud);
+    pcl::fromROSMsg(*points_msg, *cloud);  // Convert pcl2 to pcl
     if(cloud->empty()) {
       NODELET_ERROR("cloud is empty!!");
       return;
@@ -107,11 +109,11 @@ private:
     downsample_filter->setInputCloud(cloud);
     downsample_filter->filter(*downsampled);
     downsampled->header = cloud->header;
-    cloud = downsampled;
+    //cloud = downsampled;  // TODO :: aGn
 
     // background subtraction and people detection
-    auto filtered = backsub->filter(cloud);
-    auto clusters = detector->detect(filtered);
+    auto filtered = backsub->filter(cloud);  // preprocess
+    auto clusters = detector->detect(filtered);  // cluster and classify
 
     publish_msgs(points_msg->header.stamp, filtered, clusters);
   }
@@ -139,7 +141,7 @@ private:
     downsample_filter->setInputCloud(cloud);
     downsample_filter->filter(*downsampled);
     downsampled->header = cloud->header;
-    cloud = downsampled;
+    cloud = downsampled;  // TODO :: aGn
 
     // transform #cloud into the globalmap space
     const auto& position = odom_msg->pose.pose.position;
@@ -183,7 +185,10 @@ private:
    * @param filtered
    * @param clusters
    */
-  void publish_msgs(const ros::Time& stamp, const pcl::PointCloud<pcl::PointXYZI>::Ptr& filtered, const std::vector<Cluster::Ptr>& clusters) const {
+  void publish_msgs(
+          const ros::Time& stamp,
+          const pcl::PointCloud<pcl::PointXYZI>::Ptr& filtered,
+          const std::vector<Cluster::Ptr>& clusters) const {
     if(clusters_pub.getNumSubscribers()) {
       hdl_people_tracking::ClusterArrayPtr clusters_msg(new hdl_people_tracking::ClusterArray());
       clusters_msg->header.frame_id = globalmap->header.frame_id;
@@ -292,6 +297,7 @@ private:
   }
 
 private:
+    int iter = 0;
   // ROS
   ros::NodeHandle nh;
   ros::NodeHandle mt_nh;
