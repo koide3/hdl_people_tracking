@@ -9,7 +9,7 @@
     <param name="downsample_resolution" value="0.1"/>
     <!-- back subtraction params -->
     <param name="backsub_resolution" value="0.2"/>
-    <param name="backsub_occupancy_thresh" value="2"/>
+    <param name="backsub_occupancy_thresh" value="5"/>
     <!-- clustering params -->
     <param name="cluster_min_pts" value="10"/>
     <param name="cluster_max_pts" value="2048"/>
