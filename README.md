@@ -51,6 +51,7 @@ roslaunch hdl_people_tracking hdl_people_tracking_static.launch
 
 ## Related packages
 
+- [interactive_slam](https://github.com/koide3/interactive_slam)
 - <a href="https://github.com/koide3/hdl_graph_slam">hdl_graph_slam</a>
 - <a href="https://github.com/koide3/hdl_localization">hdl_localization</a>
 - <a href="https://github.com/koide3/hdl_people_tracking">hdl_people_tracking</a>
