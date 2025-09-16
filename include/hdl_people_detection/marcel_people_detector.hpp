@@ -150,7 +150,7 @@ private:
         for(const auto& pt : cloud->points) {
           mean += pt.getVector4fMap();
         }
-        return mean.head<2>();
+        return mean.head<2>() / static_cast<float>(cloud->size());
       }
     );
 
